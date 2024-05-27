@@ -1,0 +1,39 @@
+/**********************************************
+ Workshop 1
+ Course:CPA - 5
+ Last Name: Tuwar
+ First Name: Aryan
+ ID: 112137229
+ Section: ZAA
+ This assignment represents my own work in accordance with Seneca Academic Policy.
+ Signature
+ Date:<submission date>
+ **********************************************/
+
+Introduction
+
+In this workshop, we were tasked with creating a Java application to manage and display information about musical instruments.
+The primary objectives included receiving input for instrument prices, displaying details of the most expensive instrument, 
+sorting instruments by price, and filtering instruments by family. 
+This workshop provided a practical application of Java concepts such as object-oriented programming, streams, and collections.
+
+Objectives: 
+
+Receive the price value for each instrument:
+The application prompts the user to input the price of various musical instruments, which are then stored for further processing.
+
+Display the most expensive instrument:
+The application identifies and displays details of the most expensive instrument, including how to play it, how to fix it, and its pitch type.
+
+Display instruments in descending order of price:
+The application sorts and displays the list of instruments in descending order based on their prices.
+
+Display sounds of instruments by family:
+The application allows the user to input an instrument family name and displays the sounds made by instruments belonging to that family.
+Implementation
+
+To achieve these objectives, the project was divided into several classes:
+
+InstrumentModel: This class stores an array of musical instruments and provides getter and setter methods.
+InstrumentController: This class contains methods to interact with the InstrumentModel, including displaying the most expensive instrument, sorting instruments by price, and filtering instruments by family.
+Main: This class contains the main method, which serves as the entry point for the application. It handles user input and invokes the appropriate methods from the InstrumentController.
