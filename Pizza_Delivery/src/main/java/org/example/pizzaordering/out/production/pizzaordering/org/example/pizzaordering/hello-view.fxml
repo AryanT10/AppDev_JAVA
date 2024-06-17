@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.pizzaordering.HelloController">
+
+   <!-- Top section with updated style -->
+   <top>
+      <HBox alignment="CENTER" prefHeight="100.0" style="-fx-background-color: #3E4A89;" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" text="AJ's PIZZERIA" textAlignment="CENTER" style="-fx-text-fill: white;">
+               <font>
+                  <Font name="Arial Black" size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </top>
+
+   <!-- Bottom section with updated style -->
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="100.0" spacing="30.0" BorderPane.alignment="CENTER" style="-fx-background-color: #3E4A89;">
+         <children>
+            <Button fx:id="clearFieldsButton" mnemonicParsing="false" onAction="#handleClearFields" text="Clear Fields" style="-fx-font-size: 16px; -fx-background-color: #FF5722; -fx-text-fill: white;" />
+            <Button fx:id="placeOrderButton" onAction="#handlePlaceOrder" text="Place Order" style="-fx-font-size: 16px; -fx-background-color: #FF5722; -fx-text-fill: white;">
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+         <padding>
+            <Insets top="20.0" />
+         </padding>
+      </HBox>
+   </bottom>
+
+   <!-- Left section -->
+   <left>
+      <VBox alignment="TOP_LEFT" prefHeight="200.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER" style="-fx-padding: 20;">
+         <children>
+            <Label text="Enter your Name:" style="-fx-font-weight: bold;"/>
+            <TextField fx:id="customerNameTextField" />
+            <Label text="Enter your Cell:"  style="-fx-font-weight: bold;"/>
+            <TextField fx:id="customerNumberTextField" />
+            <Label text="Enter the number of Pizzas:"  style="-fx-font-weight: bold;"/>
+            <TextField fx:id="pizzaQuantityTextField" />
+         </children>
+      </VBox>
+   </left>
+
+   <!-- Center section -->
+   <center>
+      <VBox alignment="TOP_CENTER" spacing="20.0" BorderPane.alignment="CENTER" style="-fx-padding: 20;">
+         <children>
+            <HBox spacing="20.0">
+               <VBox alignment="TOP_CENTER" spacing="10.0">
+                  <children>
+                     <Label text="Select Pizza Size" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                     <ChoiceBox fx:id="pizzaSizeChoiceBox" prefHeight="25.0" prefWidth="145.0" />
+                     <Label text="Select Crust" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                     <ChoiceBox fx:id="crustChoiceBox" prefHeight="25.0" prefWidth="145.0" />
+                  </children>
+               </VBox>
+               <VBox alignment="TOP_LEFT" spacing="10.0">
+                  <children>
+                     <Label text="Select Toppings ($1.10 each)" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                     <CheckBox fx:id="pineappleCheckBox" mnemonicParsing="false" text="Pineapple" />
+                     <CheckBox fx:id="extraCheeseCheckBox" mnemonicParsing="false" text="Extra Cheese" />
+                     <CheckBox fx:id="driedShrimpsCheckBox" mnemonicParsing="false" text="Dried Shrimps" />
+                     <CheckBox fx:id="mushroomsCheckBox" mnemonicParsing="false" text="Mushrooms" />
+                     <CheckBox fx:id="anchoviesCheckBox" mnemonicParsing="false" text="Anchovies" />
+                     <CheckBox fx:id="spinachCheckBox" mnemonicParsing="false" text="Spinach" />
+                     <CheckBox fx:id="daconCheckBox" mnemonicParsing="false" text="Bacon" />
+                     <CheckBox fx:id="roastedGarlicCheckBox" mnemonicParsing="false" text="Roasted Garlic" />
+                     <CheckBox fx:id="sunDriedTomatoesCheckBox" text="Sun Dried Tomatoes" />
+                     <CheckBox fx:id="jalapenoCheckBox" text="Jalapeno" />
+                  </children>
+               </VBox>
+               <VBox alignment="TOP_LEFT" spacing="10.0">
+                  <children>
+                     <Label text="Meat type toppings ($2.15 Each)" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                     <CheckBox fx:id="groundBeefCheckBox" mnemonicParsing="false" text="Ground Beef" />
+                     <CheckBox fx:id="shreddedChickenCheckBox" mnemonicParsing="false" text="Shredded Chicken" />
+                     <CheckBox fx:id="grilledChickenCheckBox" mnemonicParsing="false" text="Grilled Chicken" />
+                     <CheckBox fx:id="pepperoniCheckBox" mnemonicParsing="false" text="Pepperoni" />
+                     <CheckBox fx:id="hamCheckBox" mnemonicParsing="false" text="Ham" />
+                     <CheckBox fx:id="baconCheckBox" mnemonicParsing="false" text="Bacon" />
+                  </children>
+               </VBox>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

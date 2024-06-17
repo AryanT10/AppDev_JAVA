@@ -1,0 +1,36 @@
+Order Number: 526949
+Customer Name: xsaxs
+Customer Number: 999999999
+Pizza Quantity: 1
+Pizza Size: Medium - $10.00
+Crust Type: Thin
+Total Price (Tax Included): $17.51
+Toppings: Mushrooms, Bacon, Spinach, Roasted Garlic
+
+Order Number: 350185
+Customer Name: Aryan
+Customer Number: 0000999909
+Pizza Quantity: 2
+Pizza Size: Large - $13.00
+Crust Type: Thin
+Total Price (Tax Included): $25.88
+Toppings: Pineapple, Extra Cheese, Mushrooms, Sun Dried Tomatoes, Spinach, Roasted Garlic, Jalapeno, Grilled Chicken
+
+Order Number: 352380
+Customer Name: Aryan
+Customer Number: 0000999909
+Pizza Quantity: 2
+Pizza Size: Large - $13.00
+Crust Type: Thin
+Total Price (Tax Included): $25.88
+Toppings: Pineapple, Extra Cheese, Mushrooms, Sun Dried Tomatoes, Spinach, Roasted Garlic, Jalapeno, Grilled Chicken
+
+Order Number: 703913
+Customer Name: Aryan
+Customer Number: 0000999999
+Pizza Quantity: 2
+Pizza Size: Extra Large - $15.00
+Crust Type: Normal
+Total Price (Tax Included): $24.41
+Toppings: Pineapple, Dried Shrimps, Mushrooms, Sun Dried Tomatoes, Spinach, Jalapeno
+

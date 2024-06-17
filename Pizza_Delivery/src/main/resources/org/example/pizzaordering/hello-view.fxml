@@ -1,0 +1,46 @@
+package org.example.pizzaordering;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
+
+public class HelloController {
+
+    @FXML
+    private TextField customerNameField;
+
+    @FXML
+    private TextField customerNumberField;
+
+    @FXML
+    private TextField quantityField;
+
+    @FXML
+    private TextField sizeField;
+
+    @FXML
+    private TextField crustField;
+
+    @FXML
+    protected void handlePlaceOrder() {
+        // Retrieve input values
+        String customerName = customerNameField.getText();
+        String customerNumber = customerNumberField.getText();
+        int quantity = Integer.parseInt(quantityField.getText());
+        String size = sizeField.getText();
+        String crust = crustField.getText();
+
+        // Create an Order object (assuming you have an Order class)
+        Order order = new Order(customerName, customerNumber, quantity, size, crust);
+
+        // Save the order to a file using FileHandler
+        FileHandler.saveToFile(order);
+
+        // Clear input fields
+        customerNameField.clear();
+        customerNumberField.clear();
+        quantityField.clear();
+        sizeField.clear();
+        crustField.clear();
+    }
+}
+
