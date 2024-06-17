@@ -4,6 +4,6 @@
 
 • Workshop-1 (Musical Instruments)
 
-• Workshop-2
+• Workshop-2 (Pizza Delivery App)
 
 • Workshop-3
