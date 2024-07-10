@@ -2,8 +2,8 @@
 
 ## This repo will be divided in the workshops I will be practicing for AppDev
 
-• Workshop-1 (Musical Instruments)
+• App-1 (Musical Instruments)
 
-• Workshop-2 (Pizza Delivery App)
+• App-2 (Pizza Delivery App)
 
-• Workshop-3
+• App-3 (CarLoaning App)
