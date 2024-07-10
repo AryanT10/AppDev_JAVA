@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #2C3E50;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.carloanapplication.HelloController">
+
+    <!-- Title with a different style -->
+    <Label alignment="CENTER" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #ECF0F1;" text="Calculate Your Car Loan Now!" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="10" />
+
+    <VBox alignment="CENTER" layoutX="62.0" layoutY="52.0" prefHeight="500.0" prefWidth="500.0" spacing="10.0" AnchorPane.leftAnchor="62.0">
+        <Label prefHeight="17.0" prefWidth="298.0" text="Customer Name" textFill="#ECF0F1" />
+        <TextField fx:id="customerName" alignment="BOTTOM_LEFT" maxWidth="300.0" promptText="Enter Name" />
+
+        <Label prefHeight="17.0" prefWidth="298.0" text="Customer Number" textFill="#ECF0F1" />
+        <TextField fx:id="customerNumber" alignment="BOTTOM_LEFT" maxWidth="300.0" promptText="Enter Phone Number" />
+
+        <Label prefHeight="17.0" prefWidth="298.0" text="Price of Vehicle" textFill="#ECF0F1" />
+        <TextField fx:id="vehiclePrice" alignment="BOTTOM_LEFT" maxWidth="300.0" promptText="Enter Price" />
+
+        <Label prefHeight="17.0" prefWidth="298.0" text="Down Payment" textFill="#ECF0F1" />
+        <TextField fx:id="downPayment" alignment="BOTTOM_LEFT" maxWidth="300.0" promptText="Enter Down Payment Amount" />
+
+        <Label prefHeight="17.0" prefWidth="298.0" text="Interest Rate %" textFill="#ECF0F1" />
+        <TextField fx:id="interestRate" alignment="BOTTOM_LEFT" maxWidth="300.0" promptText="Interest Rate" />
+
+        <!-- ChoiceBoxes with updated styles -->
+        <HBox alignment="CENTER" spacing="10.0">
+            <VBox alignment="CENTER" spacing="5.0">
+                <Label text="Type of Vehicle:" textFill="#ECF0F1" />
+                <ChoiceBox fx:id="vehicleTypeChoice" prefHeight="25.0" prefWidth="100.0">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Car" />
+                            <String fx:value="Truck" />
+                            <String fx:value="Family Van" />
+                        </FXCollections>
+                    </items>
+                </ChoiceBox>
+            </VBox>
+
+            <VBox alignment="CENTER" spacing="5.0">
+                <Label text="Vehicle Condition:" textFill="#ECF0F1" />
+                <ChoiceBox fx:id="vehicleAgeChoice" prefHeight="25.0" prefWidth="100.0">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="New" />
+                            <String fx:value="Used" />
+                        </FXCollections>
+                    </items>
+                </ChoiceBox>
+            </VBox>
+        </HBox>
+
+        <Label text="Number of Months:" textFill="#ECF0F1" />
+        <ChoiceBox fx:id="loanPeriodChoiceBox" />
+
+        <!-- RadioButtons with updated styles -->
+        <HBox spacing="10.0">
+            <RadioButton fx:id="weeklyRadioButton" mnemonicParsing="false" selected="true" text="Weekly" textFill="#ECF0F1" />
+            <RadioButton fx:id="biWeeklyRadioButton" mnemonicParsing="false" text="Bi-Weekly" textFill="#ECF0F1" />
+            <RadioButton fx:id="monthlyRadioButton" mnemonicParsing="false" text="Monthly" textFill="#ECF0F1" />
+            <padding>
+                <Insets left="130.0" top="20.0" />
+            </padding>
+        </HBox>
+
+        <!-- Buttons with updated styles -->
+        <HBox prefHeight="25.0" prefWidth="287.0" spacing="10.0">
+            <Button fx:id="clearButton" mnemonicParsing="false" onAction="#handleClearButton" text="Clear" />
+            <Button fx:id="calculateButton" mnemonicParsing="false" onAction="#handleCalculateButton" text="Calculate" />
+            <Button fx:id="saveRatesButton" mnemonicParsing="false" onAction="#handleSaveRatesButton" text="Save Rates" />
+            <Button fx:id="showSavedRatesButton" mnemonicParsing="false" onAction="#handleShowSavedRatesButton" text="Show Saved Rates" />
+            <padding>
+                <Insets left="85.0" right="20.0" top="20.0" />
+            </padding>
+        </HBox>
+
+        <Label fx:id="paymentResultLabel" textFill="#ECF0F1" />
+    </VBox>
+</AnchorPane>
