@@ -7,3 +7,5 @@
 • App-2 (Pizza Delivery App)
 
 • App-3 (CarLoaning App)
+
+• App-4 (Inventory Management)
