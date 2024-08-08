@@ -328,194 +328,176 @@ public class HomeController implements Initializable {
 			inventory.getAllParts().clear();
 			inventory.getAllProducts().clear();
 			try(Connection conn = DriverManager.getConnection("jdbc:sqlite:/Users/aryantuwar/Documents/SEMESTER 5/APD/W4&5/ARYAN/src/inventory.db");
-					Statement stm = conn.createStatement()) {
-				
-			    String query = "SELECT o.*, p.name AS partName, p.price AS partPrice, p.stock AS partStock, p.min AS partMin, p.max AS partMax " +
-			                   "FROM Outsourced o " +
-			                   "JOIN Part p ON o.partId = p.partId " +
-			                   "WHERE p.productId IS NULL";
-			    ResultSet resultSet = stm.executeQuery(query);
-			    while (resultSet.next()) {
-			        int partId = resultSet.getInt("partId");
-			        String companyName = resultSet.getString("companyName");
+				Statement stm = conn.createStatement()) {
 
-			        String partName = resultSet.getString("partName");
-			        double partPrice = resultSet.getDouble("partPrice");
-			        int partStock = resultSet.getInt("partStock");
-			        int partMin = resultSet.getInt("partMin");
-			        int partMax = resultSet.getInt("partMax");
+				// Load Outsourced Parts
+				String query = "SELECT o.*, p.name AS partName, p.price AS partPrice, p.stock AS partStock, p.min AS partMin, p.max AS partMax " +
+						"FROM Outsourced o " +
+						"JOIN Part p ON o.partId = p.partId WHERE p.productId IS NULL";
+				ResultSet resultSet = stm.executeQuery(query);
+				while (resultSet.next()) {
+					int partId = resultSet.getInt("partId");
+					String companyName = resultSet.getString("companyName");
+					String partName = resultSet.getString("partName");
+					double partPrice = resultSet.getDouble("partPrice");
+					int partStock = resultSet.getInt("partStock");
+					int partMin = resultSet.getInt("partMin");
+					int partMax = resultSet.getInt("partMax");
 
-			        Outsourced OutsourcedPart = new Outsourced(partId, partName, partPrice, partStock, partMin, partMax, companyName);
-			        inventory.addPart(OutsourcedPart);
-			    }
-			    
-			    query = "SELECT i.*, p.name AS partName, p.price AS partPrice, p.stock AS partStock, p.min AS partMin, p.max AS partMax " +
-		                   "FROM InHouse i " +
-		                   "JOIN Part p ON i.partId = p.partId " +
-		                   "WHERE p.productId IS NULL";
-			    resultSet = stm.executeQuery(query);
+					Outsourced outsourcedPart = new Outsourced(partId, partName, partPrice, partStock, partMin, partMax, companyName);
+					inventory.addPart(outsourcedPart);
+				}
 
-			    while (resultSet.next()) {
-			    	int partId = resultSet.getInt("partId");
-			    	int machineId = resultSet.getInt("machineId");
+				// Load InHouse Parts
+				query = "SELECT i.*, p.name AS partName, p.price AS partPrice, p.stock AS partStock, p.min AS partMin, p.max AS partMax " +
+						"FROM InHouse i " +
+						"JOIN Part p ON i.partId = p.partId WHERE p.productId IS NULL";
+				resultSet = stm.executeQuery(query);
+				while (resultSet.next()) {
+					int partId = resultSet.getInt("partId");
+					int machineId = resultSet.getInt("machineId");
+					String partName = resultSet.getString("partName");
+					double partPrice = resultSet.getDouble("partPrice");
+					int partStock = resultSet.getInt("partStock");
+					int partMin = resultSet.getInt("partMin");
+					int partMax = resultSet.getInt("partMax");
 
-			    	String partName = resultSet.getString("partName");
-			    	double partPrice = resultSet.getDouble("partPrice");
-			    	int partStock = resultSet.getInt("partStock");
-			    	int partMin = resultSet.getInt("partMin");
-			    	int partMax = resultSet.getInt("partMax");
+					InHouse inHousePart = new InHouse(partId, partName, partPrice, partStock, partMin, partMax, machineId);
+					inventory.addPart(inHousePart);
+				}
+				setPartList(inventory.getAllParts());
+				System.out.println("Parts loaded from the database successfully.");
 
-			    	InHouse inHousePart = new InHouse(partId, partName, partPrice, partStock, partMin, partMax, machineId);
-			    	inventory.addPart(inHousePart);
-			    }
-			    setPartList(inventory.getAllParts());
-			    
-			    ResultSet productResultSet = stm.executeQuery("SELECT * FROM Product");
+				// Load Products
+				ResultSet productResultSet = stm.executeQuery("SELECT * FROM Product");
+				while (productResultSet.next()) {
+					int productId = productResultSet.getInt("productId");
+					String name = productResultSet.getString("name");
+					double price = productResultSet.getDouble("price");
+					int stock = productResultSet.getInt("stock");
+					int min = productResultSet.getInt("min");
+					int max = productResultSet.getInt("max");
 
-			    while (productResultSet.next()) {
-			        int productId = productResultSet.getInt("productId");
-			        String name = productResultSet.getString("name");
-			        double price = productResultSet.getDouble("price");
-			        int stock = productResultSet.getInt("stock");
-			        int min = productResultSet.getInt("min");
-			        int max = productResultSet.getInt("max");
+					Product product = new Product(productId, name, price, stock, min, max);
 
-			        Product product = new Product(productId, name, price, stock, min, max);
-			        
-			        query = "SELECT i.*, p.name AS partName, p.price AS partPrice, p.stock AS partStock, p.min AS partMin, p.max AS partMax " +
-			                   "FROM InHouse i " +
-			                   "JOIN Part p ON i.partId = p.partId " +
-			                   "WHERE p.productId IS NOT NULL " +
-			                   "AND p.productId = " + productId;
-			        ResultSet inHouseResultSet = stm.executeQuery(query);
+					// Load associated InHouse parts for the product
+					query = "SELECT i.*, p.name AS partName, p.price AS partPrice, p.stock AS partStock, p.min AS partMin, p.max AS partMax " +
+							"FROM InHouse i " +
+							"JOIN Part p ON i.partId = p.partId WHERE p.productId = " + productId;
+					ResultSet inHouseResultSet = stm.executeQuery(query);
+					while (inHouseResultSet.next()) {
+						int inHousePartId = inHouseResultSet.getInt("partId");
+						int machineId = inHouseResultSet.getInt("machineId");
+						String partName = inHouseResultSet.getString("partName");
+						double partPrice = inHouseResultSet.getDouble("partPrice");
+						int partStock = inHouseResultSet.getInt("partStock");
+						int partMin = inHouseResultSet.getInt("partMin");
+						int partMax = inHouseResultSet.getInt("partMax");
 
-			        while (inHouseResultSet.next()) {
-			        	int inHousepartId = inHouseResultSet.getInt("partId");
-				    	int machineId = inHouseResultSet.getInt("machineId");
+						Part part = new InHouse(inHousePartId, partName, partPrice, partStock, partMin, partMax, machineId);
+						product.addAssociatedPart(part);
+					}
 
-				    	String partName = inHouseResultSet.getString("partName");
-				    	double partPrice = inHouseResultSet.getDouble("partPrice");
-				    	int partStock = inHouseResultSet.getInt("partStock");
-				    	int partMin = inHouseResultSet.getInt("partMin");
-				    	int partMax = inHouseResultSet.getInt("partMax");
+					// Load associated Outsourced parts for the product
+					query = "SELECT o.*, p.name AS partName, p.price AS partPrice, p.stock AS partStock, p.min AS partMin, p.max AS partMax " +
+							"FROM Outsourced o " +
+							"JOIN Part p ON o.partId = p.partId WHERE p.productId = " + productId;
+					ResultSet outsourcedResultSet = stm.executeQuery(query);
+					while (outsourcedResultSet.next()) {
+						int outsourcedPartId = outsourcedResultSet.getInt("partId");
+						String companyName = outsourcedResultSet.getString("companyName");
+						String partName = outsourcedResultSet.getString("partName");
+						double partPrice = outsourcedResultSet.getDouble("partPrice");
+						int partStock = outsourcedResultSet.getInt("partStock");
+						int partMin = outsourcedResultSet.getInt("partMin");
+						int partMax = outsourcedResultSet.getInt("partMax");
 
-				    	Part part = new InHouse(inHousepartId, partName, partPrice, partStock, partMin, partMax, machineId);
-				    	product.addAssociatedPart(part);
-			        }
-			        
-			        query = "SELECT o.*, p.name AS partName, p.price AS partPrice, p.stock AS partStock, p.min AS partMin, p.max AS partMax " +
-			                   "FROM Outsourced o " +
-			                   "JOIN Part p ON o.partId = p.partId " +
-			                   "WHERE p.productId IS NOT NULL " +
-			                   "AND p.productId = " + productId;
-			        ResultSet outsourcedResultSet = stm.executeQuery(query);
+						Part part = new Outsourced(outsourcedPartId, partName, partPrice, partStock, partMin, partMax, companyName);
+						product.addAssociatedPart(part);
+					}
 
-			        while (outsourcedResultSet.next()) {
-			        	int outsourcedpartId = outsourcedResultSet.getInt("partId");
-			        	String companyName = resultSet.getString("companyName");
+					inventory.addProduct(product);
+				}
+				setProductList(inventory.getAllProducts());
+				System.out.println("Products loaded from the database successfully.");
 
-				    	String partName = outsourcedResultSet.getString("partName");
-				    	double partPrice = outsourcedResultSet.getDouble("partPrice");
-				    	int partStock = outsourcedResultSet.getInt("partStock");
-				    	int partMin = outsourcedResultSet.getInt("partMin");
-				    	int partMax = outsourcedResultSet.getInt("partMax");
-
-				    	Part part = new Outsourced(outsourcedpartId, partName, partPrice, partStock, partMin, partMax, companyName);
-				    	product.addAssociatedPart(part);
-			        }
-			        inventory.addProduct(product);
-			    }
-			    setProductList(inventory.getAllProducts());
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
 		});
 		saveInDB.setOnAction(e->{
 			try(Connection conn = DriverManager.getConnection("jdbc:sqlite:/Users/aryantuwar/Documents/SEMESTER 5/APD/W4&5/ARYAN/src/inventory.db");
-					Statement stm = conn.createStatement()) {
+				Statement stm = conn.createStatement()) {
+
+				// Delete existing data
 				stm.executeUpdate("DELETE FROM Product");
-			    stm.executeUpdate("DELETE FROM Part");
-			    stm.executeUpdate("DELETE FROM InHouse");
-			    stm.executeUpdate("DELETE FROM Outsourced");
-			    
-				if (inventory.getAllParts().size() > 0) {
-					
-					for (Part part : inventory.getAllParts()) {
-						String insertQuery = "INSERT INTO Part (partId, name, price, stock, min, max) " +
-                                "VALUES (?, ?, ?, ?, ?, ?)";
-						PreparedStatement pstmt = conn.prepareStatement(insertQuery);
-						pstmt = conn.prepareStatement(insertQuery);
+				stm.executeUpdate("DELETE FROM Part");
+				stm.executeUpdate("DELETE FROM InHouse");
+				stm.executeUpdate("DELETE FROM Outsourced");
+				System.out.println("Existing data deleted from the database.");
+
+				// Save Parts
+				for (Part part : inventory.getAllParts()) {
+					String insertQuery = "INSERT INTO Part (partId, name, price, stock, min, max) VALUES (?, ?, ?, ?, ?, ?)";
+					try (PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
 						pstmt.setInt(1, part.getId());
 						pstmt.setString(2, part.getName());
 						pstmt.setDouble(3, part.getPrice());
 						pstmt.setInt(4, part.getStock());
 						pstmt.setInt(5, part.getMin());
 						pstmt.setInt(6, part.getMax());
-           
 						pstmt.executeUpdate();
-						pstmt.close();
-						
-						if (part instanceof InHouse) {
-							InHouse inHousePart = (InHouse) part;
-							insertQuery = "INSERT INTO InHouse (partId, machineId) " +
-	                                "VALUES (?, ?)";
-							pstmt = conn.prepareStatement(insertQuery);
+					}
+
+					if (part instanceof InHouse) {
+						InHouse inHousePart = (InHouse) part;
+						insertQuery = "INSERT INTO InHouse (partId, machineId) VALUES (?, ?)";
+						try (PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
 							pstmt.setInt(1, inHousePart.getId());
 							pstmt.setInt(2, inHousePart.getMachineId());
-	           
 							pstmt.executeUpdate();
-							pstmt.close();
 						}
-						else {
-							Outsourced OutsourcedPart = (Outsourced) part;
-							insertQuery = "INSERT INTO Outsourced (partId, companyName) " +
-	                                "VALUES (?, ?)";
-							pstmt = conn.prepareStatement(insertQuery);
-							pstmt.setInt(1, OutsourcedPart.getId());
-							pstmt.setString(2, OutsourcedPart.getCompanyName());
-	           
+					} else if (part instanceof Outsourced) {
+						Outsourced outsourcedPart = (Outsourced) part;
+						insertQuery = "INSERT INTO Outsourced (partId, companyName) VALUES (?, ?)";
+						try (PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
+							pstmt.setInt(1, outsourcedPart.getId());
+							pstmt.setString(2, outsourcedPart.getCompanyName());
 							pstmt.executeUpdate();
-							pstmt.close();
 						}
 					}
 				}
-				if (inventory.getAllProducts().size() > 0) {
-					
-					for (Product product : inventory.getAllProducts()) {
-				        
-				        String insertQuery = "INSERT INTO Product (productId, name, price, stock, min, max) " +
-				                             "VALUES (?, ?, ?, ?, ?, ?)";
-				        
-				        PreparedStatement pstmt = conn.prepareStatement(insertQuery);
-				        pstmt.setInt(1, product.getId());
-				        pstmt.setString(2, product.getName());
-				        pstmt.setDouble(3, product.getPrice());
-				        pstmt.setInt(4, product.getStock());
-				        pstmt.setInt(5, product.getMin());
-				        pstmt.setInt(6, product.getMax());
-				        
-				        pstmt.executeUpdate();
-				        pstmt.close();
-				        
-				        for (Part part : product.getAllAssociatedPart()) {
-				            
-				            insertQuery = "INSERT INTO Part (partId, name, price, stock, min, max, productId) " +
-				                                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
-				            
-				            pstmt = conn.prepareStatement(insertQuery);
-				            pstmt.setInt(1, part.getId());
-				            pstmt.setString(2, part.getName());
-				            pstmt.setDouble(3, part.getPrice());
-				            pstmt.setInt(4, part.getStock());
-				            pstmt.setInt(5, part.getMin());
-				            pstmt.setInt(6, part.getMax());
-				            pstmt.setInt(7, product.getId());
-				            
-				            pstmt.executeUpdate();
-				            pstmt.close();
-				        }
-				    }
+				System.out.println("Parts saved to the database successfully.");
+
+				// Save Products
+				for (Product product : inventory.getAllProducts()) {
+					String insertQuery = "INSERT INTO Product (productId, name, price, stock, min, max) VALUES (?, ?, ?, ?, ?, ?)";
+					try (PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
+						pstmt.setInt(1, product.getId());
+						pstmt.setString(2, product.getName());
+						pstmt.setDouble(3, product.getPrice());
+						pstmt.setInt(4, product.getStock());
+						pstmt.setInt(5, product.getMin());
+						pstmt.setInt(6, product.getMax());
+						pstmt.executeUpdate();
+					}
+
+					for (Part part : product.getAllAssociatedPart()) {
+						insertQuery = "INSERT INTO Part (partId, name, price, stock, min, max, productId) VALUES (?, ?, ?, ?, ?, ?, ?)";
+						try (PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
+							pstmt.setInt(1, part.getId());
+							pstmt.setString(2, part.getName());
+							pstmt.setDouble(3, part.getPrice());
+							pstmt.setInt(4, part.getStock());
+							pstmt.setInt(5, part.getMin());
+							pstmt.setInt(6, part.getMax());
+							pstmt.setInt(7, product.getId());
+							pstmt.executeUpdate();
+						}
+					}
 				}
+				System.out.println("Products saved to the database successfully.");
+
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
